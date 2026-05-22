@@ -6,6 +6,35 @@ PROJECT_NAME = taller 1 programacion cientifica
 PYTHON_VERSION = 3.12
 PYTHON_INTERPRETER = python
 
+
+# ============================================================
+# VARIABLES - Completa las rutas que faltan
+# ============================================================
+PYTHON = python
+DATA_DIR = data
+RAW_DIR = $(DATA_DIR)/raw
+INTERIM_DIR = $(DATA_DIR)/interim
+
+# TODO: define el archivo de datos crudos
+DATA_RAW = $(RAW_DIR)/estudiantes.csv
+
+# TODO: define el archivo de datos validados
+DATA_VALIDATE = $(INTERIM_DIR)/validado.csv
+
+# TODO: define el archivo de reporte
+DATA_REPORT = $(PROCESSED_DIR)/reporte_validacion.txt
+
+
+# ============================================================
+# PASOS DEL PIPELINE
+# ============================================================
+# TODO: escribe una regla por cada paso
+# Recuerda: cada target debe tener sus dependencias y su comando
+$(DATA_CLEAN): $(DATA_RAW) src/validar.py
+	$(PYTHON) src/validar.py
+
+
+
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################

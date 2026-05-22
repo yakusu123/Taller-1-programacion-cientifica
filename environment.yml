@@ -1,4 +1,4 @@
-name: taller 1 programacion cientifica
+name: src
 channels:
   - conda-forge
 dependencies:
@@ -20,3 +20,4 @@ dependencies:
   - pip:
     - python-dotenv
     - -e .
+    - polars
