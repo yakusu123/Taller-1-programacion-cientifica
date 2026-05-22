@@ -24,89 +24,19 @@ DATA_VALIDATE = $(INTERIM_DIR)/validado.csv
 # TODO: define el archivo de reporte
 DATA_REPORT = $(PROCESSED_DIR)/reporte_validacion.txt
 
-
+# "make" o "make all" corre todo el pipeline
+# TODO: agrega las reglas para cada paso del pipeline
+all: $(DATA_VALIDATE) $(DATA_REPORT)
+	@echo.
+	@echo Pipeline completado exitosamente!
+	@echo todo funciona/
 # ============================================================
 # PASOS DEL PIPELINE
 # ============================================================
 # TODO: escribe una regla por cada paso
 # Recuerda: cada target debe tener sus dependencias y su comando
-$(DATA_CLEAN): $(DATA_RAW) src/validar.py
+$(DATA_VALIDATE) $(DATA_REPORT): $(DATA_RAW) src/validar.py
 	$(PYTHON) src/validar.py
 
 
 
-#################################################################################
-# COMMANDS                                                                      #
-#################################################################################
-
-
-## Install Python dependencies
-.PHONY: requirements
-requirements:
-	conda env update --name $(PROJECT_NAME) --file environment.yml --prune
-	
-
-
-
-## Delete all compiled Python files
-.PHONY: clean
-clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete
-
-
-## Lint using flake8, black, and isort (use `make format` to do formatting)
-.PHONY: lint
-lint:
-	flake8 taller 1 programacion cientifica
-	isort --check --diff taller 1 programacion cientifica
-	black --check taller 1 programacion cientifica
-
-## Format source code with black
-.PHONY: format
-format:
-	isort taller 1 programacion cientifica
-	black taller 1 programacion cientifica
-
-
-
-
-
-## Set up Python interpreter environment
-.PHONY: create_environment
-create_environment:
-	conda env create --name $(PROJECT_NAME) -f environment.yml
-	
-	@echo ">>> conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
-	
-
-
-
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
-
-
-## Make dataset
-.PHONY: data
-data: requirements
-	$(PYTHON_INTERPRETER) taller 1 programacion cientifica/dataset.py
-
-
-#################################################################################
-# Self Documenting Commands                                                     #
-#################################################################################
-
-.DEFAULT_GOAL := help
-
-define PRINT_HELP_PYSCRIPT
-import re, sys; \
-lines = '\n'.join([line for line in sys.stdin]); \
-matches = re.findall(r'\n## (.*)\n[\s\S]+?\n([a-zA-Z_-]+):', lines); \
-print('Available rules:\n'); \
-print('\n'.join(['{:25}{}'.format(*reversed(match)) for match in matches]))
-endef
-export PRINT_HELP_PYSCRIPT
-
-help:
-	@$(PYTHON_INTERPRETER) -c "${PRINT_HELP_PYSCRIPT}" < $(MAKEFILE_LIST)
