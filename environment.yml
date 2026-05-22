@@ -1,4 +1,4 @@
-name: taller 1 programacion cientifica
+name: src
 channels:
   - conda-forge
 dependencies:

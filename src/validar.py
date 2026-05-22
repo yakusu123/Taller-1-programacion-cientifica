@@ -20,7 +20,7 @@ os.makedirs("data/interim", exist_ok=True)
 dftxt = df
 dftxt.write_csv("data/interim/reporte_validacion.txt")
 
-with open("reporte_validacion.txt", mode="a", encoding="utf-8") as f:
+with open("data/interim/reporte_validacion.txt", mode="a", encoding="utf-8") as f:
     f.write("nulos por columnas\n")
     f.write(str(nulo) + "\n")
     f.write(str(df.filter(pl.col("nulos"))) + "\n")
