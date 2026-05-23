@@ -31,6 +31,9 @@ with open("data/processed/reporte_final.md", mode="w", encoding="utf-8") as f:
     f.write("|______________________________________________|" + "\n")
     f.write(txt)
     f.write("#Observaciones \n")
-    f.write(
-        "los datos nullos iniciales fueron una nota1, una nota2, una nota3 y 2 asistencias"
-    )
+    f.write("los datos nullos iniciales fueron en las columnas \n")
+    f.write("_____________________\n")
+    f.write("|__tiene faltantes__|\n")
+    for i in range(alumnos):
+        f.write("| " + df["tiene_faltantes"][i] + " |\n")
+    f.write("_____________________" + "\n")
