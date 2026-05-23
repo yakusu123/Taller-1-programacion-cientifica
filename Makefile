@@ -28,9 +28,12 @@ DATA_REPORT = $(PROCESSED_DIR)/reporte_validacion.txt
 #archivo con datos imputados
 DATA_IMPUTAR = $(INTERIM_DIR)/imputado.csv
 
+#archivo con transformacion de datos y promedios de notas
+DATA_TRANSFORM = $(PROCESSED_DIR)/transformado.csv
+
 # "make" o "make all" corre todo el pipeline
 # TODO: agrega las reglas para cada paso del pipeline
-all: $(DATA_IMPUTAR)
+all: $(DATA_TRASNFORM)
 	@echo.
 	@echo Pipeline completado exitosamente!
 	@echo todo funciona/
@@ -44,6 +47,9 @@ $(DATA_VALIDATE) $(DATA_REPORT): $(DATA_RAW) src/validar.py
 
 $(DATA_IMPUTAR): $(DATA_VALIDATE) src/imputar.py
 	$(PYTHON) src/imputar.py
+
+$(DATA_TRASNFORM): $(DATA_IMPUTAR) src/transformar.py
+	$(PYTHON) src/transformar.py
 
 
 
