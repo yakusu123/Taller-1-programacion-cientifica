@@ -20,7 +20,7 @@ rango = df.filter(
 )
 
 print(nulo)
-print(df.filter(pl.col("nulos")))
+print(df.filter(pl.col("tiene_faltantes")))
 print(rango)
 
 os.makedirs("data/interim", exist_ok=True)
@@ -30,5 +30,5 @@ dftxt.write_csv("data/interim/reporte_validacion.txt")
 with open("data/interim/reporte_validacion.txt", mode="a", encoding="utf-8") as f:
     f.write("nulos por columnas\n")
     f.write(str(nulo) + "\n")
-    f.write(str(df.filter(pl.col("nulos"))) + "\n")
+    f.write(str(df.filter(pl.col("tiene_faltantes"))) + "\n")
     f.write(str(rango) + "\n")
