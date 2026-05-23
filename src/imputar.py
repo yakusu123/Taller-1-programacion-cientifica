@@ -9,4 +9,4 @@ dfI = df.with_columns(
     pl.col("nota3").fill_null(pl.col("nota3").median()),
     df.with_columns(pl.col("asistencia").fill_null(pl.col("asistencia")).mean()))
 
-dfI.write_csv("data/processed/imputado.csv")
+dfI.write_csv("data/interim/imputado.csv")
