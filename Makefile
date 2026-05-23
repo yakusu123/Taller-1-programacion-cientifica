@@ -25,7 +25,7 @@ DATA_RAW = $(RAW_DIR)/estudiantes.csv
 DATA_VALIDATE = $(INTERIM_DIR)/validado.csv
 
 # TODO: define el archivo de reporte
-DATA_REPORT = $(PROCESSED_DIR)/reporte_validacion.txt
+DATA_REPORT = $(INTERIM_DIR)/reporte_validacion.txt
 
 #archivo con datos imputados
 DATA_IMPUTAR = $(INTERIM_DIR)/imputado.csv
