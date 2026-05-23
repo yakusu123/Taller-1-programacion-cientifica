@@ -25,7 +25,7 @@ for categoria in categoria:
 asistencia = df["asistencia"].mean()
 
 os.makedirs("data/processed", exist_ok=True)
-with open("data/processed/reporte_validacion.txt", mode="w", encoding="utf-8") as f:
+with open("data/processed/resumen.txt", mode="w", encoding="utf-8") as f:
     f.write("cantidad de alumnos" + str(alumnos) +"\n")
     f.write("promedio del curso" + str(promedio) +"\n")
     for i in range(alumnos):
