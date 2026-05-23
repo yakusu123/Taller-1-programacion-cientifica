@@ -14,12 +14,26 @@ with open("data/processed/reporte_final.md", mode="w", encoding="utf-8") as f:
     f.write("| nombre | nota 1 | nota 2 | nota 3 | promedio |" + "\n")
     f.write("|________|________|________|________|__________|" + "\n")
     for i in range(alumnos):
-        f.write("| " + str(df["nombre"][i]) +" |" + str(df["nota1"][i]) +" |" + str(df["nota2"][i]) +" |" + str(df["nota3"][i]) +" |" + str(df["promedio"][i]) +" |" + "\n")
+        f.write(
+            "| "
+            + str(df["nombre"][i])
+            + " |"
+            + str(df["nota1"][i])
+            + " |"
+            + str(df["nota2"][i])
+            + " |"
+            + str(df["nota3"][i])
+            + " |"
+            + str(df["promedio"][i])
+            + " |"
+            + "\n"
+        )
     f.write("|______________________________________________|" + "\n")
     f.write(txt)
     f.write("#Observaciones \n")
-    f.write("los datos nullos iniciales fueron una nota1, una nota2, una nota3 y 2 asistencias")
-
-
-
-
+    f.write("los datos nullos iniciales fueron en las columnas \n")
+    f.write("_____________________\n")
+    f.write("|__tiene faltantes__|\n")
+    for i in range(alumnos):
+        f.write("| " + df["tiene_faltantes"][i] + " |\n")
+    f.write("_____________________" + "\n")
