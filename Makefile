@@ -11,6 +11,7 @@ PYTHON_INTERPRETER = python
 # VARIABLES - Completa las rutas que faltan
 # ============================================================
 PYTHON = python
+LINTER = ruff
 DATA_DIR = data
 RAW_DIR = $(DATA_DIR)/raw
 INTERIM_DIR = $(DATA_DIR)/interim
