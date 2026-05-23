@@ -10,7 +10,7 @@ with open("data/processed/resumen.txt", mode="r", encoding="utf-8") as r:
 alumnos = df["nombre"].count()
 
 with open("data/processed/reporte_final.md", mode="w", encoding="utf-8") as f:
-    f.write("#REPORTE FINAL" + str(datetime.today()) + "\n")
+    f.write("#REPORTE FINAL" + str(datetime.date.today()) + "\n")
     f.write("| nombre | nota 1 | nota 2 | nota 3 | promedio |" + "\n")
     f.write("|________|________|________|________|__________|" + "\n")
     for i in range(alumnos):
