@@ -12,3 +12,5 @@ dfI = df.with_columns(
 
 os.makedirs("data/interim", exist_ok=True)
 dfI.write_csv("data/interim/imputado.csv")
+
+# TODO se puede cambiar la forma de imputar revisando la columna de tiene_faltantes

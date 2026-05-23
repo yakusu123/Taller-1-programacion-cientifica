@@ -4,7 +4,7 @@ import os
 df = pl.read_csv("data/raw/estudiantes.csv")
 
 df = df.with_columns(
-    nulos = pl.any_horizontal(pl.all().is_null())
+    tiene_faltantes = pl.any_horizontal(pl.all().is_null())
 )
 os.makedirs("data/interim", exist_ok=True)
 df.write_csv("data/interim/validado.csv")
