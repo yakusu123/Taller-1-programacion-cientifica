@@ -69,7 +69,7 @@ $(DATA_REPORTE): $(DATA_RESUM) $(DATA_TRANSFORM) src/reporte.py
 .PHONY: limpiar
 limpiar:
 	@echo Eliminando archivos generados...
-	rm -f $(DATA_VALIDATE) $(DATA_REPORT) $(DATA_IMPUTAR) $(DATA_TRANSFORM) $(DATA_RESUM) $(DATA_REPORTE)
+	del /f /q $(subst /,\,$(DATA_VALIDATE) $(DATA_REPORT) $(DATA_IMPUTAR) $(DATA_TRANSFORM) $(DATA_RESUM) $(DATA_REPORTE))
 	@echo Listo! Puedes correr make de nuevo.
 
 .PHONY: estado
