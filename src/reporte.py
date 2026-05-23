@@ -35,5 +35,5 @@ with open("data/processed/reporte_final.md", mode="w", encoding="utf-8") as f:
     f.write("_____________________\n")
     f.write("|__tiene faltantes__|\n")
     for i in range(alumnos):
-        f.write("| " + df["tiene_faltantes"][i] + " |\n")
+        f.write("| " + str(df["tiene_faltantes"][i]) + " |\n")
     f.write("_____________________" + "\n")
