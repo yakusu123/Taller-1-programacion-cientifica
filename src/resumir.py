@@ -11,11 +11,11 @@ contAprobados = 0
 for aprobado in aprobados:
     if aprobado == "aprobado":
         contAprobados += 1
-categoria = df["categoria"]
+categorias = df["categoria"]
 contDestacados = 0
 contReprobados = 0
 contCategorias = 0
-for categoria in categoria:
+for categoria in categorias:
     if categoria == "Destacado":
         contDestacados += 1
     elif categoria == "reprobado":
