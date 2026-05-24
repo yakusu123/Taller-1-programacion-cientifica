@@ -8,7 +8,7 @@ with open("data/processed/resumen.txt", mode="r", encoding="utf-8") as r:
     txt = r.read()
 
 alumnos = df["nombre"].count()
-
+#escritura del archivo markdown utilizando datos previos y un analisis ya realizado en el codigo resumir.pý
 with open("data/reports/reporte_final.md", mode="w", encoding="utf-8") as f:
     f.write("#REPORTE FINAL" + str(datetime.date.today()) + "\n")
     f.write("| nombre | nota 1 | nota 2 | nota 3 | promedio |" + "\n")
