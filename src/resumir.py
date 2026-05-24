@@ -4,7 +4,7 @@ import os
 os.makedirs("data/processed", exist_ok=True)
 df = pl.read_csv("data/processed/transformado.csv")
 
-#variables para almacenar la informacion a utilizar en metricas futuras
+# variables para almacenar la informacion a utilizar en metricas futuras
 promedio = df["promedio"].mean()
 alumnos = df["nombre"].count()
 aprobados = df["aprobado"]
@@ -16,7 +16,7 @@ categorias = df["categoria"]
 contDestacados = 0
 contReprobados = 0
 contCategorias = 0
-#revisa cada categoria y cuanta en general a cual corresponde
+# revisa cada categoria y cuanta en general a cual corresponde
 for categoria in categorias:
     if categoria == "Destacado":
         contDestacados += 1
@@ -26,7 +26,7 @@ for categoria in categorias:
         contCategorias += 1
 asistencia = df["asistencia"].mean()
 
-#escritura de un archivo desde 0
+# escritura de un archivo desde 0
 os.makedirs("data/processed", exist_ok=True)
 with open("data/processed/resumen.txt", mode="w", encoding="utf-8") as f:
     f.write("cantidad de alumnos" + str(alumnos) + "\n")

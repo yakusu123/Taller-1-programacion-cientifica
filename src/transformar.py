@@ -3,7 +3,7 @@ import os
 
 os.makedirs("data/interim", exist_ok=True)
 df = pl.read_csv("data/interim/imputado.csv")
-#revision de los datos de notas para clasificarlos y definir si estan aprobados
+# revision de los datos de notas para clasificarlos y definir si estan aprobados
 notasF = df.with_columns(
     promedio=pl.mean_horizontal("nota1", "nota2", "nota3").round(2),
     aprobado=pl.when(pl.mean_horizontal("nota1", "nota2", "nota3") > 4)
