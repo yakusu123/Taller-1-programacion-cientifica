@@ -6,78 +6,89 @@ PROJECT_NAME = taller 1 programacion cientifica
 PYTHON_VERSION = 3.12
 PYTHON_INTERPRETER = python
 
-#################################################################################
-# COMMANDS                                                                      #
-#################################################################################
 
+# ============================================================
+# VARIABLES - Completa las rutas que faltan
+# ============================================================
+PYTHON = python
+LINTER = ruff
+DATA_DIR = data
+RAW_DIR = $(DATA_DIR)/raw
+INTERIM_DIR = $(DATA_DIR)/interim
+PROCESSED_DIR = $(DATA_DIR)/processed
+REPORT = reports
 
-## Install Python dependencies
-.PHONY: requirements
-requirements:
-	conda env update --name $(PROJECT_NAME) --file environment.yml --prune
-	
+# TODO: define el archivo de datos crudos
+DATA_RAW = $(RAW_DIR)/estudiantes.csv
 
+# TODO: define el archivo de datos validados
+DATA_VALIDATE = $(INTERIM_DIR)/validado.csv
 
+# TODO: define el archivo de reporte
+DATA_REPORT = $(INTERIM_DIR)/reporte_validacion.txt
 
-## Delete all compiled Python files
-.PHONY: clean
-clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete
+#archivo con datos imputados
+DATA_IMPUTAR = $(INTERIM_DIR)/imputado.csv
 
+#archivo con transformacion de datos y promedios de notas
+DATA_TRANSFORM = $(PROCESSED_DIR)/transformado.csv
 
-## Lint using flake8, black, and isort (use `make format` to do formatting)
-.PHONY: lint
+#archivo con las metricas obtenidas
+DATA_RESUM = $(PROCESSED_DIR)/resumen.txt
+
+DATA_REPORTE = $(REPORT)/reporte_final.md
+
+# "make" o "make all" corre todo el pipeline
+# TODO: agrega las reglas para cada paso del pipeline
+all: lint $(DATA_REPORTE)
+	@echo.
+	@echo Pipeline completado exitosamente!
+
 lint:
-	flake8 taller 1 programacion cientifica
-	isort --check --diff taller 1 programacion cientifica
-	black --check taller 1 programacion cientifica
+	$(LINTER) check src/*.py
+	$(LINTER) format --check src/*.py
+# ============================================================
+# PASOS DEL PIPELINE
+# ============================================================
+# TODO: escribe una regla por cada paso
+# Recuerda: cada target debe tener sus dependencias y su comando
+$(DATA_VALIDATE) $(DATA_REPORT): $(DATA_RAW) src/validar.py
+	$(PYTHON) src/validar.py
 
-## Format source code with black
-.PHONY: format
-format:
-	isort taller 1 programacion cientifica
-	black taller 1 programacion cientifica
+$(DATA_IMPUTAR): $(DATA_VALIDATE) src/imputar.py
+	$(PYTHON) src/imputar.py
 
+$(DATA_TRANSFORM): $(DATA_IMPUTAR) src/transformar.py
+	$(PYTHON) src/transformar.py
 
+$(DATA_RESUM): $(DATA_TRANSFORM) src/resumir.py
+	$(PYTHON) src/resumir.py
 
+$(DATA_REPORTE): $(DATA_RESUM) $(DATA_TRANSFORM) src/reporte.py
+	$(PYTHON) src/reporte.py
+.PHONY: limpiar
+limpiar:
+	@echo Eliminando archivos generados...
+	del /f /q $(subst /,\,$(DATA_VALIDATE) $(DATA_REPORT) $(DATA_IMPUTAR) $(DATA_TRANSFORM) $(DATA_RESUM) $(DATA_REPORTE))
+	@echo Listo! Puedes correr make de nuevo.
 
-
-## Set up Python interpreter environment
-.PHONY: create_environment
-create_environment:
-	conda env create --name $(PROJECT_NAME) -f environment.yml
-	
-	@echo ">>> conda env created. Activate with:\nconda activate $(PROJECT_NAME)"
-	
-
-
-
-#################################################################################
-# PROJECT RULES                                                                 #
-#################################################################################
-
-
-## Make dataset
-.PHONY: data
-data: requirements
-	$(PYTHON_INTERPRETER) taller 1 programacion cientifica/dataset.py
-
-
-#################################################################################
-# Self Documenting Commands                                                     #
-#################################################################################
-
-.DEFAULT_GOAL := help
-
-define PRINT_HELP_PYSCRIPT
-import re, sys; \
-lines = '\n'.join([line for line in sys.stdin]); \
-matches = re.findall(r'\n## (.*)\n[\s\S]+?\n([a-zA-Z_-]+):', lines); \
-print('Available rules:\n'); \
-print('\n'.join(['{:25}{}'.format(*reversed(match)) for match in matches]))
-endef
-export PRINT_HELP_PYSCRIPT
-
-help:
-	@$(PYTHON_INTERPRETER) -c "${PRINT_HELP_PYSCRIPT}" < $(MAKEFILE_LIST)
+.PHONY: estado
+estado:
+	@echo ============================================
+	@echo  Estado del Pipeline
+	@echo ============================================
+	@echo.
+	@echo [ DATOS CRUDOS ]
+	@if exist $(DATA_RAW)       (echo   OK $(DATA_RAW))       else (echo   -- $(DATA_RAW)   no existe)
+	@echo.
+	@echo [ PROCESADOS ]
+	@if exist $(DATA_VALIDATE)  (echo   OK $(DATA_VALIDATE))  else (echo   -- $(DATA_VALIDATE) no existe)
+	@if exist $(DATA_REPORT)    (echo   OK $(DATA_REPORT))    else (echo   -- $(DATA_REPORT)   no existe)
+	@if exist $(DATA_IMPUTAR)   (echo   OK $(DATA_IMPUTAR))   else (echo   -- $(DATA_IMPUTAR)  no existe)
+	@if exist $(DATA_TRANSFORM) (echo   OK $(DATA_TRANSFORM)) else (echo   -- $(DATA_TRANSFORM) no existe)
+	@if exist $(DATA_RESUM)     (echo   OK $(DATA_RESUM))     else (echo   -- $(DATA_RESUM)     no existe)
+	@echo.
+	@echo [ REPORTES ]
+	@if exist $(DATA_REPORTE)   (echo   OK $(DATA_REPORTE))   else (echo   -- $(DATA_REPORTE)   no existe)
+	@echo.
+	@echo ============================================
